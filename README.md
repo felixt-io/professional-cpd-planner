@@ -88,4 +88,4 @@ Open the local server address shown in your terminal.
 
 ## Deploy and refresh automatically
 
-You can deploy the `docs/` folder to any static hosting service. To keep the data fresh, schedule a daily job to run `scraper/monitor_cpd.py` and commit the updated `docs/data.json` back to your repository. The included workflow file is a ready-to-use example if your hosting setup supports scheduled jobs.
+You can deploy the `docs/` folder to any static hosting service. To keep the data fresh, schedule a daily job to run `scraper/monitor_cpd.py` and commit the updated `docs/data.json` back to your repository.
