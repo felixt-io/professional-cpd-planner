@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CPD Planner</title>
+    <meta name="description" content="CPD Planner helps you filter CPD events by topic, division, audience, and fee." />
+    <style>
+      :root {
+        --ink: #1a1a1a;
+        --muted: #4a4a4a;
+        --paper: #f7f4ef;
+        --accent: #c55b27;
+        --accent-dark: #8f3a16;
+        --mist: #efe6da;
+        --card: #ffffff;
+        --line: #e0d7cc;
+        --chip: #f1e3d6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+        color: var(--ink);
+        background: radial-gradient(circle at 10% 10%, #f7efe2, transparent 40%),
+          radial-gradient(circle at 80% 20%, #f9e9d6, transparent 45%),
+          linear-gradient(135deg, #f6f1ea, #f3ebe2);
+        min-height: 100vh;
+      }
+
+      header {
+        padding: 48px 24px 24px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .title {
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        font-size: 44px;
+        margin: 0 0 8px;
+        letter-spacing: -0.5px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        color: var(--muted);
+        max-width: 720px;
+      }
+
+      .meta-bar {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .pill {
+        background: var(--mist);
+        border: 1px solid var(--line);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px 48px;
+      }
+
+      .controls {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 12px 30px rgba(26, 26, 26, 0.06);
+        margin-bottom: 24px;
+      }
+
+      .control-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      label {
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: #fff;
+        font-size: 14px;
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+      }
+
+      .category-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .cat-btn {
+        border: 1px solid var(--line);
+        background: var(--chip);
+        color: var(--ink);
+        padding: 8px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        font-size: 13px;
+      }
+
+      .cat-btn.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent-dark);
+      }
+
+      .stats {
+        margin: 18px 0 8px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .events {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        box-shadow: 0 10px 24px rgba(26, 26, 26, 0.05);
+      }
+
+      .card-main {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .card h3 {
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .status-tag {
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #ffe8e0;
+        border: 1px solid #f0b4a0;
+        color: #8f3a16;
+      }
+
+      .meta {
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .details {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-self: start;
+      }
+
+      .btn {
+        font-family: "Trebuchet MS", "Gill Sans", Candara, Calibri, sans-serif;
+        border-radius: 10px;
+        padding: 8px 12px;
+        border: 1px solid var(--accent-dark);
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .btn.secondary {
+        background: transparent;
+        color: var(--accent-dark);
+      }
+
+      footer {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      @media (max-width: 720px) {
+        .title {
+          font-size: 34px;
+        }
+
+        .card {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="title">CPD Planner</h1>
+      <p class="subtitle">
+        Browse CPD events by your preferred topics and focus areas. Plan ahead and add events to your smartphone calendar in one tap.
+      </p>
+      <div class="meta-bar" id="meta-bar">
+        <span>Loading refresh schedule...</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="controls">
+        <div class="control-grid">
+          <div>
+            <label for="division-filter">Division</label>
+            <select id="division-filter"></select>
+          </div>
+          <div>
+            <label for="fee-filter">Fee</label>
+            <select id="fee-filter"></select>
+          </div>
+        </div>
+        <label>Major categories</label>
+        <div class="category-bar" id="category-bar"></div>
+      </section>
+
+      <div class="stats" id="stats"></div>
+      <section class="events" id="events"></section>
+    </main>
+
+    <footer>
+      Disclaimer: This website is an independent, open-source dashboard and is not affiliated with, endorsed by, sponsored by, or
+      otherwise associated with any organisation. Event information is compiled from publicly available sources for convenience only.
+      While reasonable efforts are made to present information accurately and in a timely manner, the content is provided on an "as is"
+      basis without warranties of any kind, express or implied, including as to accuracy, completeness, currency, availability, or
+      fitness for a particular purpose. Users should verify all event details, eligibility requirements, fees, registration
+      arrangements, and any updates directly with the official event organiser before relying on the information. To the maximum extent
+      permitted by law, the maintainers of this website disclaim all liability for any loss or damage arising from or in connection with
+      the use of, or reliance on, this website or its content. The sole purpose of this website is to provide an overview of CPD events
+      by topic to assist users in planning and time management.
+    </footer>
+
+    <script>
+      const state = {
+        category: "All",
+        division: "All",
+        fee: "All",
+      };
+
+      const escapeHtml = (input) => {
+        if (!input) return "";
+        return input
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      };
+
+      const uniq = (arr) => Array.from(new Set(arr)).filter((v) => v && v.trim());
+
+      const formatMetaValue = (value) => (value ? value : "Not available yet");
+
+      const buildOption = (value, label) => {
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = label;
+        return opt;
+      };
+
+      const sortByRank = (a, b) => (a.rank || 999) - (b.rank || 999);
+
+      const parseIcsLocal = (isoString) => {
+        const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}):\d{2}/.exec(isoString || "");
+        if (!match) return null;
+        return `${match[1].replaceAll("-", "")}T${match[2].replaceAll(":", "")}00`;
+      };
+
+      const formatIcsUtc = (date) => {
+        const pad = (n) => String(n).padStart(2, "0");
+        return (
+          date.getUTCFullYear() +
+          pad(date.getUTCMonth() + 1) +
+          pad(date.getUTCDate()) +
+          "T" +
+          pad(date.getUTCHours()) +
+          pad(date.getUTCMinutes()) +
+          pad(date.getUTCSeconds()) +
+          "Z"
+        );
+      };
+
+      const addDays = (dateIso, days) => {
+        const [y, m, d] = dateIso.split("-").map(Number);
+        const dt = new Date(Date.UTC(y, m - 1, d));
+        dt.setUTCDate(dt.getUTCDate() + days);
+        const pad = (n) => String(n).padStart(2, "0");
+        return `${dt.getUTCFullYear()}-${pad(dt.getUTCMonth() + 1)}-${pad(dt.getUTCDate())}`;
+      };
+
+      const escapeIcs = (text) =>
+        (text || "")
+          .replace(/\\/g, "\\\\")
+          .replace(/\n/g, "\\n")
+          .replace(/,/g, "\\,")
+          .replace(/;/g, "\\;");
+
+      const buildIcs = (ev) => {
+        const summary = escapeIcs(ev.name || "CPD Event");
+        const location = escapeIcs(ev.venue || "");
+        const description = escapeIcs(ev.url ? `Event info: ${ev.url}` : "Event info");
+        const uid = `${ev.event_id || ev.cpd_code || Math.random().toString(36).slice(2)}@cpd-planner`;
+        const dtstamp = formatIcsUtc(new Date());
+
+        if (ev.start_local && ev.end_local) {
+          const start = parseIcsLocal(ev.start_local);
+          const end = parseIcsLocal(ev.end_local);
+          if (!start || !end) return null;
+          return [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//CPD Planner//EN",
+            "BEGIN:VEVENT",
+            `UID:${uid}`,
+            `DTSTAMP:${dtstamp}`,
+            `DTSTART:${start}`,
+            `DTEND:${end}`,
+            `SUMMARY:${summary}`,
+            `DESCRIPTION:${description}`,
+            `LOCATION:${location}`,
+            ev.url ? `URL:${ev.url}` : "",
+            "END:VEVENT",
+            "END:VCALENDAR",
+          ]
+            .filter(Boolean)
+            .join("\r\n");
+        }
+
+        if (ev.event_date_iso) {
+          const start = ev.event_date_iso.replaceAll("-", "");
+          const end = addDays(ev.event_date_iso, 1).replaceAll("-", "");
+          return [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//CPD Planner//EN",
+            "BEGIN:VEVENT",
+            `UID:${uid}`,
+            `DTSTAMP:${dtstamp}`,
+            `DTSTART;VALUE=DATE:${start}`,
+            `DTEND;VALUE=DATE:${end}`,
+            `SUMMARY:${summary}`,
+            `DESCRIPTION:${description}`,
+            `LOCATION:${location}`,
+            ev.url ? `URL:${ev.url}` : "",
+            "END:VEVENT",
+            "END:VCALENDAR",
+          ]
+            .filter(Boolean)
+            .join("\r\n");
+        }
+
+        return null;
+      };
+
+      const downloadIcs = (ev) => {
+        const ics = buildIcs(ev);
+        if (!ics) {
+          window.open(ev.url, "_blank", "noreferrer");
+          return;
+        }
+        const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${ev.cpd_code || ev.event_id || "cpd-event"}.ics`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      };
+
+      const renderEvents = (events) => {
+        const container = document.getElementById("events");
+        container.innerHTML = "";
+        if (!events.length) {
+          container.innerHTML = "<div class=\"card\"><strong>No events match the current filters.</strong></div>";
+          return;
+        }
+        events.forEach((ev, index) => {
+          const card = document.createElement("article");
+          card.className = "card";
+
+          const isFull = (ev.status || "").toLowerCase() === "full";
+          const dateLine = [ev.event_date, ev.event_time].filter(Boolean).join(" ");
+          const detailsText = ev.details || "";
+          const details = detailsText ? escapeHtml(detailsText).slice(0, 260) : "";
+          const detailsMore = detailsText.length > 260;
+
+          card.innerHTML = `
+            <div class="card-main">
+              <div class="title-row">
+                <h3>${escapeHtml(ev.name || "Untitled event")}</h3>
+                ${isFull ? `<span class="status-tag">FULL</span>` : ""}
+              </div>
+              <div class="meta">${escapeHtml(dateLine || "Date/time to be confirmed")}</div>
+              <div class="details">
+                <strong>Target audience:</strong> ${escapeHtml(ev.priority || "Not specified")}
+                <br />
+                <strong>Fee:</strong> ${escapeHtml(ev.fee_text || "Not specified")}
+                ${ev.payment_text ? `<br /><strong>Payment:</strong> ${escapeHtml(ev.payment_text)}` : ""}
+                ${ev.venue ? `<br /><strong>Venue:</strong> ${escapeHtml(ev.venue)}` : ""}
+                ${details ? `<br /><strong>Details:</strong> ${details}${detailsMore ? "..." : ""}` : ""}
+              </div>
+            </div>
+            <div class="actions">
+              <a class="btn secondary" href="${escapeHtml(ev.url || "#")}" target="_blank" rel="noreferrer">Event page</a>
+              <button class="btn" data-index="${index}">Add to calendar</button>
+            </div>
+          `;
+
+          container.appendChild(card);
+        });
+
+        container.querySelectorAll("button[data-index]").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const idx = Number(e.currentTarget.getAttribute("data-index"));
+            downloadIcs(events[idx]);
+          });
+        });
+      };
+
+      const applyFilters = (allEvents, categoryButtons) => {
+        let baseFiltered = allEvents.filter((ev) => ev.is_upcoming);
+        if (state.division !== "All") {
+          baseFiltered = baseFiltered.filter((ev) => ev.division === state.division);
+        }
+        if (state.fee !== "All") {
+          baseFiltered = baseFiltered.filter((ev) => ev.fee_bucket === state.fee);
+        }
+
+        const counts = new Map();
+        baseFiltered.forEach((ev) => {
+          (ev.categories || ["Other / General"]).forEach((cat) => {
+            counts.set(cat, (counts.get(cat) || 0) + 1);
+          });
+        });
+
+        if (categoryButtons) {
+          categoryButtons.forEach((btn) => {
+            const cat = btn.dataset.category;
+            if (!cat || cat === "All") return;
+            const count = counts.get(cat) || 0;
+            btn.textContent = `${cat} [${count}]`;
+          });
+        }
+
+        let filtered = [...baseFiltered];
+        if (state.category !== "All") {
+          filtered = filtered.filter((ev) => (ev.categories || []).includes(state.category));
+        }
+
+        filtered.sort((a, b) => {
+          const aKey = a.start_local || a.event_date_iso || "9999-12-31";
+          const bKey = b.start_local || b.event_date_iso || "9999-12-31";
+          return aKey.localeCompare(bKey);
+        });
+
+        document.getElementById("stats").textContent = `${filtered.length} events shown`;
+        renderEvents(filtered);
+      };
+
+      const setupFilters = (events, taxonomy) => {
+        const divisionSelect = document.getElementById("division-filter");
+        const feeSelect = document.getElementById("fee-filter");
+        const categoryBar = document.getElementById("category-bar");
+
+        divisionSelect.appendChild(buildOption("All", "All divisions"));
+        feeSelect.appendChild(buildOption("All", "All fees"));
+
+        uniq(events.map((e) => e.division)).sort().forEach((division) => divisionSelect.appendChild(buildOption(division, division)));
+        uniq(events.map((e) => e.fee_bucket))
+          .filter((fee) => fee)
+          .sort()
+          .forEach((fee) => feeSelect.appendChild(buildOption(fee, fee)));
+
+        const categories = taxonomy.length
+          ? taxonomy.sort(sortByRank).map((c) => c.name)
+          : uniq(events.flatMap((e) => e.categories || [])).sort();
+        const categoryButtons = [];
+        const allButton = document.createElement("button");
+        allButton.className = "cat-btn active";
+        allButton.textContent = "All topics";
+        allButton.dataset.category = "All";
+        allButton.addEventListener("click", () => {
+          state.category = "All";
+          document.querySelectorAll(".cat-btn").forEach((btn) => btn.classList.remove("active"));
+          allButton.classList.add("active");
+          applyFilters(events, categoryButtons);
+        });
+        categoryBar.appendChild(allButton);
+
+        categories.forEach((cat) => {
+          const btn = document.createElement("button");
+          btn.className = "cat-btn";
+          btn.textContent = `${cat} [0]`;
+          btn.dataset.category = cat;
+          btn.addEventListener("click", () => {
+            state.category = cat;
+            document.querySelectorAll(".cat-btn").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            applyFilters(events, categoryButtons);
+          });
+          categoryBar.appendChild(btn);
+          categoryButtons.push(btn);
+        });
+
+        divisionSelect.addEventListener("change", (e) => {
+          state.division = e.target.value;
+          applyFilters(events, categoryButtons);
+        });
+        feeSelect.addEventListener("change", (e) => {
+          state.fee = e.target.value;
+          applyFilters(events, categoryButtons);
+        });
+
+        applyFilters(events, categoryButtons);
+      };
+
+      const formatLocalStamp = (value) => {
+        if (!value) return "";
+        const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/.exec(value);
+        if (match) {
+          return `${match[1]} ${match[2]}`;
+        }
+        return value;
+      };
+
+      const setMeta = (data) => {
+        const metaBar = document.getElementById("meta-bar");
+        const lastRun = formatMetaValue(formatLocalStamp(data.last_run_local));
+        const schedule = formatMetaValue(data.scheduled_refresh_local);
+        metaBar.innerHTML = `
+          <span>Last updated (Local): ${escapeHtml(lastRun)}</span>
+          <span>Scheduled refresh: ${escapeHtml(schedule)}</span>
+        `;
+      };
+
+      const init = async () => {
+        try {
+          const res = await fetch("./data.json", { cache: "no-store" });
+          const data = await res.json();
+          const events = data.events || [];
+          setMeta(data);
+          setupFilters(events, data.taxonomy || []);
+        } catch (err) {
+          document.getElementById("meta-bar").textContent = "Failed to load data.json";
+          console.error(err);
+        }
+      };
+
+      init();
+    </script>
+  </body>
+</html>

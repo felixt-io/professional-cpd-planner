@@ -1,0 +1,29 @@
+{
+  "site_name": "Example CPD Listings",
+  "listing_url_template": "LISTING_URL_TEMPLATE",
+  "detail_url_template": "DETAIL_URL_TEMPLATE",
+  "max_pages": 10,
+  "max_workers": 6,
+  "timezone_offset_hours": 0,
+  "id_regex": "events/(\\d+)",
+  "listing_row_selector": "table tr",
+  "listing_link_selector": "a[href]",
+  "listing_status_selector": "td:last-child",
+  "detail_labels": [
+    "Code",
+    "Event Name",
+    "Event Type",
+    "Event Date",
+    "Event Time",
+    "Registration Closing Date",
+    "Venue",
+    "Division",
+    "Organizer",
+    "Fee",
+    "Priority",
+    "Language",
+    "Details",
+    "Remarks",
+    "Payment"
+  ]
+}

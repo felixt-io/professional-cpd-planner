@@ -1,0 +1,166 @@
+{
+  "categories": [
+    {
+      "id": "proptech-contech",
+      "name": "PropTech / ConTech (AI, BIM, IoT)",
+      "rank": 1,
+      "keywords": [
+        "ai",
+        "artificial intelligence",
+        "bim",
+        "building information modeling",
+        "iot",
+        "internet of things",
+        "digital",
+        "digitalisation",
+        "digitalization",
+        "automation",
+        "data analytics",
+        "big data",
+        "drone",
+        "robot",
+        "smart building",
+        "smart buildings"
+      ]
+    },
+    {
+      "id": "smart-buildings",
+      "name": "Smart Buildings / FM Tech / Building Services",
+      "rank": 2,
+      "keywords": [
+        "building control",
+        "building services",
+        "facade",
+        "lift",
+        "plumbing",
+        "drainage",
+        "fire safety",
+        "maintenance operations",
+        "facility management",
+        "water leakage",
+        "inspection",
+        "monitoring"
+      ]
+    },
+    {
+      "id": "esg-netzero",
+      "name": "ESG / Net Zero / Energy & Carbon",
+      "rank": 3,
+      "keywords": [
+        "esg",
+        "net zero",
+        "decarbon",
+        "energy audit",
+        "carbon",
+        "sustainability",
+        "green building",
+        "leed",
+        "energy",
+        "pv",
+        "solar",
+        "carbon emissions"
+      ]
+    },
+    {
+      "id": "contracts-disputes",
+      "name": "Contracts / Claims / Disputes",
+      "rank": 4,
+      "keywords": [
+        "contract",
+        "nec",
+        "adjudication",
+        "mediation",
+        "litigation",
+        "dispute",
+        "arbitration",
+        "expert witness",
+        "case law",
+        "evidence",
+        "insurance"
+      ]
+    },
+    {
+      "id": "qs-cost-procurement",
+      "name": "QS: Cost / Procurement / Tendering",
+      "rank": 5,
+      "keywords": [
+        "quantity surveying",
+        "cost management",
+        "estimating",
+        "tender",
+        "procurement",
+        "valuation",
+        "variations",
+        "payment",
+        "final accounts",
+        "icms"
+      ]
+    },
+    {
+      "id": "project-delivery",
+      "name": "Project Management / Delivery / Productivity",
+      "rank": 6,
+      "keywords": [
+        "project management",
+        "design and build",
+        "delivery method",
+        "value engineering",
+        "productivity",
+        "mic",
+        "modular",
+        "feasibility"
+      ]
+    },
+    {
+      "id": "valuation-markets",
+      "name": "Valuation / Rating / Markets & Investment",
+      "rank": 7,
+      "keywords": [
+        "valuation",
+        "rateable value",
+        "rating",
+        "reit",
+        "asset enhancement",
+        "office sector",
+        "market",
+        "rental premium",
+        "investment"
+      ]
+    },
+    {
+      "id": "planning-land-admin",
+      "name": "Planning / Land Administration / Development",
+      "rank": 8,
+      "keywords": [
+        "planning",
+        "development control",
+        "land administration",
+        "appraisal",
+        "viability",
+        "building control",
+        "sustainable development planning"
+      ]
+    },
+    {
+      "id": "land-surveying",
+      "name": "Land Surveying / Geospatial / Boundary",
+      "rank": 9,
+      "keywords": [
+        "land surveying",
+        "geospatial",
+        "boundary",
+        "cadastre",
+        "surveying",
+        "csdi",
+        "spatial data",
+        "gis"
+      ]
+    },
+    {
+      "id": "other",
+      "name": "Other / General",
+      "rank": 99,
+      "keywords": []
+    }
+  ]
+}
