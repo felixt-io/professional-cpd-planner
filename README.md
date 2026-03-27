@@ -4,7 +4,7 @@ Every day there is new knowledge and the world is advancing quickly. The same is
 
 In reality, busy schedules make it easy to miss email reminders and valuable CPD events. This project turns CPD listings into an interactive dashboard to help you easily plan, record, and manage your CPD journey. It also includes a one-tap shortcut to add CPD event to your smartphone calendar directly with minimal friction.
 
-Sample dashboard: https://cpd-planner.pages.dev/
+Sample dashboard: https://cpd-planner.fxtstudio.app/
 
 ## What this project does
 
