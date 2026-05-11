@@ -89,3 +89,15 @@ Open the local server address shown in your terminal.
 ## Deploy and refresh automatically
 
 You can deploy the `docs/` folder to any static hosting service. To keep the data fresh, schedule a daily job to run `scraper/monitor_cpd.py` and commit the updated `docs/data.json` back to your repository.
+
+## Acknowledgments
+
+Built with these open-source projects:
+
+- [requests](https://github.com/psf/requests) (Apache 2.0) for HTTP fetching
+- [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/) (MIT) for HTML parsing
+- [lxml](https://lxml.de/) (BSD) as the parser backend
+
+## License
+
+MIT. See `LICENSE`.
